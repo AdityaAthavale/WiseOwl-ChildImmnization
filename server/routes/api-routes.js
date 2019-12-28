@@ -5,25 +5,34 @@ module.exports = function(app) {
 
     //This will open index.html
     app.get("/", function(req, res) {
+        console.log("Sending index.html")
         res.sendFile(path.join(__dirname, "./../../client/html/index.html"));
     });
 
-    // GET route for getting all of the todos
-    app.get("/api/todos", function(req, res) {
-    });
+    app.get("/search", function(req, res) {
+        console.log("Sending search.html")
+        res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
+    })
 
     // POST route for saving a new todo
     app.post("/api/login", function(req, res) {
-        // console.log(db)
-        let user = db.Users.findOne( {where: {email: req.body.email}}).then(
+        console.log("Logging In...")
+        let user = db.Users.findOne( {
+            where: {
+                email: req.body.email
+            }
+        }).then(
             (record) => {
-                console.log(record)
+                if (record == null) {
+                    res.redirect("/")
+                    return;
+                }
                 if(record.passPhrase == req.body.password) {
                     console.log("Authenticated")
-                    res.json(record);
+                    res.redirect("/search")
                 } else {
                     console.log("Authentication failed.")
-                    res.json({'success': false })
+                    res.redirect("/")
                 }
             }
         )

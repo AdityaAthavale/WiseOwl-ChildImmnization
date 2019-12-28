@@ -21,14 +21,14 @@ app.use(express.json());
 // Static directory
 app.use(express.static("public"));
 
-db.Users.create({
-  firstName: "Aditya",
-  lastName: "Athavale",
-  email: "aditya.athavale@gmail.com",
-  passPhrase: "Adds@123#"
-}).then(function(dbTodo) {
-  console.log("Created default record")
-});
+// db.Users.create({
+//   firstName: "Aditya",
+//   lastName: "Athavale",
+//   email: "aditya.athavale@gmail.com",
+//   passPhrase: "Adds@123#"
+// }).then(function(dbTodo) {
+//   console.log("Created default record")
+// });
 
 // Routes
 // =============================================================
