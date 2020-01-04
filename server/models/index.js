@@ -30,6 +30,15 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+//Creating foreign keys here.
+//These 2 lines will add columns called StudentId and VaccineId in Table Vaccination Records.
+//These lines will also make those columns not null.
+//This will also mean if you delete an entry from Students table all entries for that student id in vaccinationRecords will get deleted.
+//Also record can not be added to VaccinationRecords unless there is student with that student Id present.
+//This is above what we will cover in class but required to deliver professional project.
+db.Student.hasMany(db.VaccinationRecords)
+db.Vaccine.hasMany(db.VaccinationRecords)
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
