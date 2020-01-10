@@ -48,8 +48,8 @@ module.exports = function(app) {
         })
     })
 
-    app.post("api/addStudent", function(req, res) {
-        db.Students.create({
+    app.post("/api/addStudent", function(req, res) {
+        db.Student.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             addressLine1: req.body.addressLine1,

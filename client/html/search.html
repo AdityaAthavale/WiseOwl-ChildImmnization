@@ -31,14 +31,29 @@
     <div class="container">
         <form id="searchForm" action="api/search" class="form-inline my-2 my-lg-0">
             <input name="seatchField" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search-button">Search</button>
         </form>
     </div>
-    <script>
-        document.getElementById("submitButton").addEventListener("click", function() {
-          console.log("Submitting form now..")
-          document.getElementById("searchForm").submit()
+    <!--This is to display data from studensts table-->
+    <div id="display-students"></div>
+
+     <script>
+        document.getElementById("search-button").addEventListener("click", function() {
+        const queryURL = "http://localhost:8080/?/api/search";
+
+    $.ajax({
+      url: queryURL,
+      method: "POST"
+    }).then(function(response) {
+      console.log(response);
+    });
+
+        //   alert("hello");
+        //   console.log("Submitting form now..")
+        //   document.getElementById("searchForm").submit()
         })
-    </script>
+    </script> 
+
+    
 </body>
 </html>
