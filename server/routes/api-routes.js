@@ -81,27 +81,25 @@ module.exports = function(app) {
         let today = new Date()
         let timeDifference = Math.abs(today.getTime() - bDate.getTime());
         let differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-        //Step 3 find all due vaccines.
-        db.Vaccine.findAll({
+
+        db.VaccinationRecords.findAll( {
             where: {
-                dueDaysFromBirth: {
-                    [Op.lte]: differenceInDays
+                StudentId: req.body.studentId, 
+            },
+            attributes: ['id']
+        }).then(vaccineIds => {
+            db.Vaccine.findAll({
+                where: {
+                    dueDaysFromBirth: {
+                        [Op.lte]: differenceInDays
+                    },
+                    id: {
+                        [Op.notIn]: vaccineIds
+                    }
                 }
-            }
-        }).then(vaccines => {
-            res.send(vaccines)
-            //Step 4: Remove vaccines which are already done.
-        //     db.VaccinationRecords.findAll({
-        //         where: {
-        //             StudentId: req.body.studentId,
-        //         }
-        //     }).then (vaccinationRecords => {
-        //         res.send(vaccines.filter( vaccine=> {
-        //             vaccines.map(record => {
-        //                 record.id
-        //             }).includes(vaccine.id)
-        //         }))
-        //     })
+            }).then(vaccines => {
+                res.send(vaccines)
+            })
         })
     })
 
