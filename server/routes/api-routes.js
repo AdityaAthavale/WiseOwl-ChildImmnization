@@ -37,8 +37,17 @@ module.exports = function(app) {
         )
     });
 
+    app.post("/api/addVaccination", function(req, res) {
+        db.VaccinationRecords.create({
+            StudentId: req.body.StudentId,
+            VaccineId: req.body.VaccineId,
+            vaccinationDate: req.body.vaccinationDate
+        }).then(record => {
+            res.send(record)
+        })
+    })
+
     app.post("/api/search", function(req, res) {
-        console.log(req.body)
         db.Student.findAll({
             where: {
                 //We will search for student Id or student name.
