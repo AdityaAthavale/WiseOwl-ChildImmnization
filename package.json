@@ -20,6 +20,7 @@
     "express-session": "^1.15.1",
     "mysql": "^2.13.0",
     "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
     "req-flash": "0.0.3",
     "sequelize": "^5.21.3"
   },

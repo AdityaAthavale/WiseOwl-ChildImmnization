@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Wie Owl</title>
+    <title>Wise Owl</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -12,48 +13,134 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-            <a class="navbar-brand" href="#">Wise Owl Pre School</a>
+                <a class="navbar-brand" href="#">Wise Owl Pre School</a>
             </div>
             <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <!-- <li><a href="#">Page 1</a></li> -->
-            <!-- <li><a href="#">Page 2</a></li> -->
+                <li class="active"><a href="#">Home</a></li>
+                <!-- <li><a href="#">Page 1</a></li> -->
+                <!-- <li><a href="#">Page 2</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </nav>
     <div class="container">
-        <form id="searchForm" method="POST" action="api/search" class="form-inline my-2 my-lg-0">
-            <input name="searchField" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form id="searchForm" class="form-inline my-2 my-lg-0">
+            <div class="form-group">
+                <label for="search-field">Name :</label>
+                <input name="searchField" id="search-field" class="form-control mr-sm-2" type="search"
+                    placeholder="Search" aria-label="Search">
+            </div>
+            <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
         </form>
     </div>
     <!--This is to display data from studensts table-->
-    <div id="display-students"></div>
+    <div id="student-view"></div>
 
-     <script>
-        document.getElementById("search-button").addEventListener("click", function() {
-        const queryURL = "http://localhost:8080/?/api/search";
+    <script>
+        document.getElementById("search-button").addEventListener("click", function () {
+            // const queryURL = "http://localhost:8080/api/search";
+            //console.log('button clicked: ' + $('#search-field').val());
+            const queryURL = "/api/search";
+            $("#student-view").empty();
 
-    $.ajax({
-      url: queryURL,
-      method: "POST"
-    }).then(function(response) {
-      console.log(response);
-    });
+            // if search field is empty, alert message
+            if ($.trim($('#search-field').val()) == '') {
+                alert("Please enter a student's name ");
+                return;
+            }
+            $.ajax({
+                url: queryURL,
+                method: "POST",
+                data: {
+                    searchText: $.trim($('#search-field').val())
+                }
+            }).then(function (response) {
+                //console.log("Std data: " + JSON.stringify(response));
+                let students = response;
+                $("#student-view").append(`<table id="table" class="table table-striped">
+                    <thead class="thead-dark"><tr><th>id</th><th>firstName</th><th>lastName</th><th>addressLine1</th><th>addressLine2</th><th>addressLine3</th><th>city</th><th>state</th><th>state</th><th>pin</th><th>fatherName</th><th>motherName</th><th>fatherCell</th><th>motherCell</th>
+                        <th>homePhone</th><th>email1</th><th>email2</th><th>birthdate</th><th>enrollmentdate</th><th>createdAt</th><th>updatedAt</th>
+                        </tr></thead>
+                    <tbody id="tbody"></tbody>
+                    </table>`);
 
-        //   alert("hello");
-        //   console.log("Submitting form now..")
-        //   document.getElementById("searchForm").submit()
+
+                students.forEach(student => {
+                    //console.log(student);
+                    //console.log(student.firstName);
+
+                    let tr = '<tr><td>' +
+                        student.id +
+                        '</td>' +
+                        '<td>' +
+                        student.firstName +
+                        '</td>' +
+                        '<td>' +
+                        student.lastName +
+                        '</td>' +
+                        '<td>' +
+                        student.addressLine1 +
+                        '</td>' +
+                        '<td>' +
+                        student.addressLine2 +
+                        '</td>' +
+                        '<td>' +
+                        student.addressLine3 +
+                        '</td>' +
+                        '<td>' +
+                        student.city +
+                        '</td>' +
+                        '<td>' +
+                        student.state +
+                        '</td>' +
+                        '<td>' +
+                        student.pin +
+                        '</td>' +
+                        '<td>' +
+                        student.fatherName +
+                        '</td>' +
+                        '<td>' +
+                        student.fatherCell +
+                        '</td>' +
+                        '<td>' +
+                        student.motherCell +
+                        '</td>' +
+                        '<td>' +
+                        student.homePhone +
+                        '</td>' +
+                        '<td>' +
+                        student.email1 +
+                        '</td>' +
+                        '<td>' +
+                        student.email2 +
+                        '</td>' +
+                        '<td>' +
+                        student.birthdate +
+                        '</td>' +
+                        '<td>' +
+                        student.enrollmentdate +
+                        '</td>' +
+                        '<td>' +
+                        student.createdAt +
+                        '</td>' +
+                        '<td>' +
+                        student.updatedAt +
+                        '</td>' +
+                        '</tr>';
+                    $("#tbody").append(tr);
+                });
+            });
         })
-    </script> 
+    </script>
 
-    
+
 </body>
+
 </html>
