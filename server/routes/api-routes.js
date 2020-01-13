@@ -13,6 +13,10 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
     })
 
+    app.get("/css/commonStyles.css", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
+    })
+
     app.post("/api/login", function(req, res) {
         db.Teacher.findOne( {
             where: {
@@ -25,7 +29,6 @@ module.exports = function(app) {
                     return;
                 }
                 if(record.password == req.body.password) {
-                    console.log("Authenticated")
                     //We will show search page.
                     res.redirect("/search")
                 } else {
@@ -48,6 +51,7 @@ module.exports = function(app) {
     })
 
     app.post("/api/search", function(req, res) {
+        console.log(req)
         db.Student.findAll({
             where: {
                 //We will search for student Id or student name.

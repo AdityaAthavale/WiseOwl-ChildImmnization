@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Wie Owl</title>
+    <title>Wise Owl</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+    <!-- Local CSS -->
+    <link type="text/css" rel="stylesheet" href="./css/commonStyles.css"/>
+</head>src
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -30,15 +32,64 @@
     </nav>
     <div class="container">
         <form id="searchForm" method="POST" action="api/search" class="form-inline my-2 my-lg-0">
-            <input name="searchField" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input id="searchBox"name="searchField" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="submitButton"class="btn btn-outline-success my-2 my-sm-0 bordered" type="button">Search</button>
         </form>
+        <div id="listContainer"></div>
     </div>
     <script>
-        document.getElementById("submitButton").addEventListener("click", function() {
-          console.log("Submitting form now..")
-          document.getElementById("searchForm").submit()
+        $("#submitButton").click(function() {
+            const queryURL = "http://localhost:8080/api/search";
+            $.ajax({
+                url: queryURL,
+                method: "POST",
+                data: {"searchField" : $("#searchBox").val()}
+            }).then(function(response) {
+                console.log(response)
+                response.forEach(element => {
+                    createStudentCard(element)
+                });
+            });
         })
+
+        function createStudentCard(student) {
+            // <div class="card text-center" style="width: 18rem;">
+            var card = $("<div>")
+            card.addClass("card")
+            // card.addClass("text-center")
+            card.addClass("bordered")
+            // card.attr("style", "width: 18rem")
+            
+            // <div class="card-body">
+            var cardBody = $("<div>")
+            cardBody.addClass("card-body")
+            
+            // <h5 class="card-title">Special title treatment</h5>
+            var cardTitle = $("<h5>")
+            cardTitle.addClass("card-title")
+            cardTitle.text(student.firstName)
+
+            var address = $("<p>")
+            address.text(student.addressLine1 + " " + student.addressLine2 + " " + student.addressLine3 + " " + student.city + " " + student.state)
+
+            //<a href="#" class="btn btn-primary">Go somewhere</a>
+            var studentLink = $("<button>")
+            studentLink.addClass("btn")
+            student.attr("id", student.id)
+            studentLink.addClass("btn-primary")
+            studentLink.text("Select")
+
+            $(student.id).click() {
+                
+            }
+
+            cardBody.append(cardTitle)
+            cardBody.append(address)
+            cardBody.append(studentLink)
+            card.append(cardBody)
+            $("#listContainer").append(card)
+        }
+
     </script>
 </body>
 </html>
