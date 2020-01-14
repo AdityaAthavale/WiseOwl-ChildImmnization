@@ -5,11 +5,11 @@ module.exports = function (app) {
 
     //This will open index.html
     app.get("/", function (req, res) {
-        res.sendFile(path.join(__dirname, "./../../client/html/index.html"));
+        res.sendFile(path.join(__dirname, "./../../public/html/index.html"));
     });
 
     app.get("/search", function (req, res) {
-        res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
+        res.sendFile(path.join(__dirname, "./../../public/html/search.html"));
     })
 
     app.post("/api/login", function (req, res) {
@@ -53,7 +53,7 @@ module.exports = function (app) {
     })
 
     app.post("/api/addStudent", function (req, res) {
-        console.log(db.Student)
+        console.log(req.body)
         db.Student.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -71,7 +71,7 @@ module.exports = function (app) {
             email1: req.body.email1,
             email2: req.body.email2,
             birthdate: req.body.birthdate,
-            enrollmentdate: req.body.enrollmentdate
+            enrollmentdate: req.body.enrollmentdate || new Date()
         }).then(newStudent => {
             res.send(newStudent)
         })
