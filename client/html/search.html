@@ -33,7 +33,7 @@
     <div class="container">
         <form id="searchForm" class="form-inline my-2 my-lg-0">
             <div class="form-group">
-                <label for="search-field">Name :</label>
+                <label for="search-field"></label>
                 <input name="searchField" id="search-field" class="form-control mr-sm-2" type="search"
                     placeholder="Search" aria-label="Search">
             </div>
@@ -41,7 +41,14 @@
         </form>
     </div>
     <!--This is to display data from studensts table-->
-    <div id="student-view"></div>
+    <!-- <div id="student-view"></div> -->
+
+    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        
+        <div class="card-body" id="student-view">
+          
+          
+        </div>
 
     <script>
         document.getElementById("search-button").addEventListener("click", function () {
@@ -62,82 +69,15 @@
                     searchText: $.trim($('#search-field').val())
                 }
             }).then(function (response) {
-                //console.log("Std data: " + JSON.stringify(response));
-                let students = response;
-                $("#student-view").append(`<table id="table" class="table table-striped">
-                    <thead class="thead-dark"><tr><th>id</th><th>firstName</th><th>lastName</th><th>addressLine1</th><th>addressLine2</th><th>addressLine3</th><th>city</th><th>state</th><th>state</th><th>pin</th><th>fatherName</th><th>motherName</th><th>fatherCell</th><th>motherCell</th>
-                        <th>homePhone</th><th>email1</th><th>email2</th><th>birthdate</th><th>enrollmentdate</th><th>createdAt</th><th>updatedAt</th>
-                        </tr></thead>
-                    <tbody id="tbody"></tbody>
-                    </table>`);
-
-
-                students.forEach(student => {
-                    //console.log(student);
-                    //console.log(student.firstName);
-
-                    let tr = '<tr><td>' +
-                        student.id +
-                        '</td>' +
-                        '<td>' +
-                        student.firstName +
-                        '</td>' +
-                        '<td>' +
-                        student.lastName +
-                        '</td>' +
-                        '<td>' +
-                        student.addressLine1 +
-                        '</td>' +
-                        '<td>' +
-                        student.addressLine2 +
-                        '</td>' +
-                        '<td>' +
-                        student.addressLine3 +
-                        '</td>' +
-                        '<td>' +
-                        student.city +
-                        '</td>' +
-                        '<td>' +
-                        student.state +
-                        '</td>' +
-                        '<td>' +
-                        student.pin +
-                        '</td>' +
-                        '<td>' +
-                        student.fatherName +
-                        '</td>' +
-                        '<td>' +
-                        student.fatherCell +
-                        '</td>' +
-                        '<td>' +
-                        student.motherCell +
-                        '</td>' +
-                        '<td>' +
-                        student.homePhone +
-                        '</td>' +
-                        '<td>' +
-                        student.email1 +
-                        '</td>' +
-                        '<td>' +
-                        student.email2 +
-                        '</td>' +
-                        '<td>' +
-                        student.birthdate +
-                        '</td>' +
-                        '<td>' +
-                        student.enrollmentdate +
-                        '</td>' +
-                        '<td>' +
-                        student.createdAt +
-                        '</td>' +
-                        '<td>' +
-                        student.updatedAt +
-                        '</td>' +
-                        '</tr>';
-                    $("#tbody").append(tr);
+               // console.log("Std data: " + JSON.stringify(response));
+                
+              // console.log("Std data: " + JSON.stringify(response[0].firstName));
+               
+                $("student-view").text = response[0].firstName;
+                   
                 });
             });
-        })
+        
     </script>
 
 
