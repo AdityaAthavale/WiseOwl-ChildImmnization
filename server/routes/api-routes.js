@@ -13,8 +13,12 @@ module.exports = function (app) {
         res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
     })
 
-    app.post("/api/login", function (req, res) {
-        db.Teacher.findOne({
+    app.get("/css/commonStyles.css", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
+    })
+
+    app.post("/api/login", function(req, res) {
+        db.Teacher.findOne( {
             where: {
                 email: req.body.email
             }
@@ -24,8 +28,7 @@ module.exports = function (app) {
                     res.redirect("/")
                     return;
                 }
-                if (record.password == req.body.password) {
-                    console.log("Authenticated")
+                if(record.password == req.body.password) {
                     //We will show search page.
                     res.redirect("/search")
                 } else {
@@ -37,10 +40,18 @@ module.exports = function (app) {
         )
     });
 
-    app.post("/api/search", function (req, res) {
+    app.post("/api/addVaccination", function(req, res) {
+        db.VaccinationRecords.create({
+            StudentId: req.body.StudentId,
+            VaccineId: req.body.VaccineId,
+            vaccinationDate: req.body.vaccinationDate
+        }).then(record => {
+            res.send(record)
+        })
+    })
 
-
-        //console.log("DATA: " + req.body.searchText);
+    app.post("/api/search", function(req, res) {
+        console.log(req)
         db.Student.findAll({
             where: {
                 //We will search for student Id or student name.
