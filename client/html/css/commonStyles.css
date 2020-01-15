@@ -1,0 +1,7 @@
+.bordered {
+    color : black;
+    border: 1px solid black;
+    padding: 5px;
+    width: 18rem;
+    margin: 10px;
+};

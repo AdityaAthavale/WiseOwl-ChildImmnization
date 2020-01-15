@@ -1,8 +1,17 @@
-console.log("Hello from register")
-
 // when user clicks add-btn
 $(document).ready(() => {
+    $('#personalInformationModal').modal('show');
+
+    $("#next").click(function () {
+        $('#personalInformationModal').modal('toggle');
+        $('#parentInformationModal').modal('show');
+    });
+    $("#back").click(function () {
+        $('#parentInformationModal').modal('toggle');
+        $('#personalInformationModal').modal('show');
+    });
     $("#add-btn").on("click", function (event) {
+        console.log("Submitting...")
         event.preventDefault();
         // make a newCharacter obj
         var newStudent = {

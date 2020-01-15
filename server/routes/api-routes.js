@@ -1,19 +1,32 @@
 var db = require("./../models");
 var path = require("path");
 
-module.exports = function (app) {
+const Op = db.Sequelize.Op;
+module.exports = function(app) {
 
     //This will open index.html
     app.get("/", function (req, res) {
-        res.sendFile(path.join(__dirname, "./../../public/html/index.html"));
+        res.sendFile(path.join(__dirname, "./../../client/html/index.html"));
     });
 
     app.get("/search", function (req, res) {
-        res.sendFile(path.join(__dirname, "./../../public/html/search.html"));
+        res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
     })
 
-    app.post("/api/login", function (req, res) {
-        db.Teacher.findOne({
+    app.get("/register", function (req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/register.html"));
+    })
+
+    app.get("/js/register.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/register.js"))
+    })
+
+    app.get("/css/commonStyles.css", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
+    })
+
+    app.post("/api/login", function(req, res) {
+        db.Teacher.findOne( {
             where: {
                 email: req.body.email
             }
@@ -23,8 +36,7 @@ module.exports = function (app) {
                     res.redirect("/")
                     return;
                 }
-                if (record.password == req.body.password) {
-                    console.log("Authenticated")
+                if(record.password == req.body.password) {
                     //We will show search page.
                     res.redirect("/search")
                 } else {
@@ -36,24 +48,30 @@ module.exports = function (app) {
         )
     });
 
-    app.post("/api/search", function (req, res) {
-        db.Students.findAll({
+    app.post("/api/addVaccination", function(req, res) {
+        db.VaccinationRecords.create({
+            StudentId: req.body.StudentId,
+            VaccineId: req.body.VaccineId,
+            vaccinationDate: req.body.vaccinationDate
+        }).then(record => {
+            res.send(record)
+        })
+    })
+
+    app.post("/api/search", function(req, res) {
+        console.log(req)
+        db.Student.findAll({
             where: {
                 //We will search for student Id or student name.
                 //If we get match for either we will return results.
-                [Op.or]: [{
-                    id: req.body.searchTerm
-                }, {
-                    firstName: req.body.searchTerm
-                }]
+                [Op.or]: [{id: req.body.searchField}, {firstName: req.body.searchField}]
             }
         }).then(students => {
             res.send(students)
         })
     })
 
-    app.post("/api/addStudent", function (req, res) {
-        console.log(req.body)
+    app.post("/api/addStudent", function(req, res) {
         db.Student.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -77,59 +95,31 @@ module.exports = function (app) {
         })
     })
 
-    app.post("api/dueVaccines", function (req, res) {
-        //Step 1: Find student from student ID
+    app.post("/api/dueVaccines", function(req, res) {
+        //Step 1: Calculate students age in Days
+        //Post parameters: Get birthdate and student id from server.
+        let bDate = new Date(req.body.birthday)
+        let today = new Date()
+        let timeDifference = Math.abs(today.getTime() - bDate.getTime());
+        let differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-        db.Vaccine.findAll({
+        db.VaccinationRecords.findAll( {
             where: {
-                [Op.and]: {
-                    [Op.notIn]: {
-                        id: db.VaccinationRecords.findAll({
-                            where: {
-                                StudentId: req.body.id
-                            }
-                        })
-                    }
-                }
-            }
-        })
-
-        db.Students.findOne({
-            where: {
-                id: req.body.id
-            }
-        }).then(student => {
-            //Step 2: Calculate students age in Days.
-            let birthday = student.birthdate
-            let bDate = new Date(birthday)
-            let toay = new Date()
-            let timeDifference = timeDifference = Math.abs(secondDate.getTime() - firstDate.getTime());
-            let differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-            //Step 3 find all due vaccines.
+                StudentId: req.body.studentId, 
+            },
+            attributes: ['id']
+        }).then(vaccineIds => {
             db.Vaccine.findAll({
                 where: {
                     dueDaysFromBirth: {
                         [Op.lte]: differenceInDays
+                    },
+                    id: {
+                        [Op.notIn]: vaccineIds
                     }
                 }
             }).then(vaccines => {
-                //Step 4: Remove vaccines which are already done.
-                db.VaccinationRecords.findAll({
-                    where: {
-                        studentId: req.body.id,
-                        [Op.in]: {
-                            vaccineId: vaccines.map(function (vaccine) {
-                                return vaccine.id
-                            })
-                        }
-                    }
-                }).then(vaccinationRecords => {
-                    res.send(vaccines.filter(vaccine => {
-                        vaccines.map(record => {
-                            record.id
-                        }).includes(vaccine.id)
-                    }))
-                })
+                res.send(vaccines)
             })
         })
     })
@@ -153,19 +143,4 @@ module.exports = function (app) {
             res.send(newVaccine)
         })
     })
-
-    // DELETE route for deleting todos. We can get the id of the todo to be deleted from
-    // req.params.id
-    app.delete("/api/todos/:id", function (req, res) {
-        // Use the sequelize destroy method to delete a record from our table with the
-        // id in req.params.id. res.json the result back to the user
-    });
-
-    // PUT route for updating todos. We can get the updated todo data from req.body
-    app.put("/api/todos", function (req, res) {
-
-        // Use the sequelize update method to update a todo to be equal to the value of req.body
-        // req.body will contain the id of the todo we need to update 
-
-    });
 };
