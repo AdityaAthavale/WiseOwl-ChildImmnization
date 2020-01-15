@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,20 +13,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Local CSS -->
     <link type="text/css" rel="stylesheet" href="./css/commonStyles.css"/>
-</head>src
+</head>
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Wise Owl Pre School</a>
+            <a class="navbar-brand" href="#">Wise Owl Pre School</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <!-- <li><a href="#">Page 1</a></li> -->
-                <!-- <li><a href="#">Page 2</a></li> -->
+            <li class="active"><a href="#">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </nav>
@@ -38,16 +35,6 @@
         </form>
         <div id="listContainer"></div>
     </div>
-    <!--This is to display data from studensts table-->
-    <!-- <div id="student-view"></div> -->
-
-    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-        
-        <div class="card-body" id="student-view">
-          
-          
-        </div>
-
     <script>
         $("#submitButton").click(function() {
             const queryURL = "http://localhost:8080/api/search";
@@ -61,8 +48,7 @@
                     createStudentCard(element)
                 });
             });
-        })
-
+        });
         function createStudentCard(student) {
             // <div class="card text-center" style="width: 18rem;">
             var card = $("<div>")
@@ -78,32 +64,21 @@
             // <h5 class="card-title">Special title treatment</h5>
             var cardTitle = $("<h5>")
             cardTitle.addClass("card-title")
-            cardTitle.text(student.firstName)
-
+            cardTitle.text(student.firstName);
             var address = $("<p>")
-            address.text(student.addressLine1 + " " + student.addressLine2 + " " + student.addressLine3 + " " + student.city + " " + student.state)
-
+            address.text(student.addressLine1 + " " + student.addressLine2 + " " + student.addressLine3 + " " + student.city + " " + student.state);
             //<a href="#" class="btn btn-primary">Go somewhere</a>
             var studentLink = $("<button>")
             studentLink.addClass("btn")
-            student.attr("id", student.id)
+            studentLink.attr("id", student.id)
             studentLink.addClass("btn-primary")
             studentLink.text("Select")
-
-            $(student.id).click() {
-                
-            }
-
-            cardBody.append(cardTitle)
+            cardBody.append(cardTitle);
             cardBody.append(address)
             cardBody.append(studentLink)
             card.append(cardBody)
             $("#listContainer").append(card)
         }
-
     </script>
-
-
 </body>
-
 </html>

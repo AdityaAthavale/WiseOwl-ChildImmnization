@@ -56,9 +56,7 @@ module.exports = function (app) {
             where: {
                 //We will search for student Id or student name.
                 //If we get match for either we will return results.
-                firstName: req.body.searchText, 
-                
-                // [Op.or]: [{id: req.body.searchField}, {firstName: req.body.searchField}]
+                [Op.or]: [{id: req.body.searchField}, {firstName: req.body.searchField}]
             }
 
         }).then(students => {
