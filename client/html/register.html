@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Wie Owl</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+		<!-- Moment.js Reference -->
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+		 
+		<!-- Date Picker -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+		<script src="/js/register.js"></script>
+		<style>
+			h1 {
+				margin-left: 6%;
+			}
+
+			label {
+				font-weight: 500;
+			}
+
+			#formPartOne,
+			#formPartTwo {
+				margin: 5%;
+			}
+
+			hr {
+				border-top: 1.2px solid lightgray;
+				margin-top: 0;
+			}
+
+			#formPartTwo {
+				display: none;
+			}
+
+			#back {
+				margin-right: 5px;
+			}
+
+			.right {
+				float: right
+			}
+		</style>
+	</head>
+
+	<body>
+	</body>
+	<div id="personalInformationModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Sign In</h4>
+			</div>
+			<div class="modal-body">  
+				<form action="" method="POST" role="form">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Student First Name</label>
+								<input type="text" class="form-control" id="firstname" placeholder="">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Student Last Name</label>
+								<input type="text" class="form-control" id="lastname" placeholder="">
+							</div>
+						</div>
+					</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Address 1</label>
+									<input type="text" class="form-control" id="addressone" placeholder="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Address 2</label>
+									<input type="text" class="form-control" id="addresstwo" placeholder="">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Address 3</label>
+									<input type="text" class="form-control" id="addressthree" placeholder="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">City</label>
+									<input type="text" class="form-control" id="city" placeholder="">
+								</div>
+							</div>
+						</div>
+							
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">State</label>
+									<input type="text" class="form-control" id="state" placeholder="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Pin</label>
+									<input type="text" class="form-control" id="pin" placeholder="">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="birthday">Birthday</label>
+									<input type="date" class="form-control"/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="genter">Gender</label>
+									<div class="row">
+										<div class="col-md-4">
+											<input type="radio" name="gender" value="male" class="form-control" checked> Male
+										</div>
+										<div class="col-md-4">
+											<input type="radio" name="gender" value="female" class="form-control"> Female
+										</div>
+										<div class="col-md-4">
+											<input type="radio" name="gender" value="other" class="form-control"> Other
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="text-left">
+						<button type="button" class="btn btn-primary btn-md" id="next">
+							<span class="fa fa-fire nextbtntext"></span>Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="parentInformationModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Sign In</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" role="form">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Father Name</label>
+								<input type="text" class="form-control" id="fathername" placeholder="">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Mother Name</label>
+								<input type="text" class="form-control" id="mothername" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Father Cell</label>
+								<input type="text" class="form-control" id="fathercell" placeholder="">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Mother Cell</label>
+								<input type="text" class="form-control" id="mothercell" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Father Email</label>
+								<input type="text" class="form-control" id="emailone" placeholder="">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Mother Email</label>
+								<input type="text" class="form-control" id="emailtwo" placeholder="">
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="">Home Phone</label>
+								<input type="text" class="form-control" id="homephone">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row"><label for="">&nbsp</label></div>
+							<div class="row">
+								<div class="col-md-6">
+									<button type="button" class="form-control btn btn-primary" id="back">Back
+								</div>
+								<div class="col-md-6">
+									<button id="add-btn" type="button" class="form-control btn btn-primary" id="submit">Submit
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>	
+		</div>
+	</div>
+</html>

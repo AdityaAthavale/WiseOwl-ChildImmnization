@@ -13,6 +13,14 @@ module.exports = function (app) {
         res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
     })
 
+    app.get("/register", function (req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/register.html"));
+    })
+
+    app.get("/js/register.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/register.js"))
+    })
+
     app.get("/css/commonStyles.css", function(req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
     })
@@ -83,7 +91,7 @@ module.exports = function (app) {
             email1: req.body.email1,
             email2: req.body.email2,
             birthdate: req.body.birthdate,
-            enrollmentdate: req.body.enrollmentdate
+            enrollmentdate: req.body.enrollmentdate || new Date()
         }).then(newStudent => {
             res.send(newStudent)
         })
