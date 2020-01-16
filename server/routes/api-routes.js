@@ -59,7 +59,6 @@ module.exports = function(app) {
     })
 
     app.post("/api/search", function(req, res) {
-        console.log(req)
         db.Student.findAll({
             where: {
                 //We will search for student Id or student name.
@@ -95,14 +94,19 @@ module.exports = function(app) {
         })
     })
 
+    app.post("api/getVaccinationRecords", function(req, res) {
+
+    });
+
     app.post("/api/dueVaccines", function(req, res) {
         //Step 1: Calculate students age in Days
         //Post parameters: Get birthdate and student id from server.
         let bDate = new Date(req.body.birthday)
         let today = new Date()
-        let timeDifference = Math.abs(today.getTime() - bDate.getTime());
+        let timeDifference = today.getTime() - bDate.getTime();
         let differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
+        
         db.VaccinationRecords.findAll( {
             where: {
                 StudentId: req.body.studentId, 

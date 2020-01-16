@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Local CSS -->
     <link type="text/css" rel="stylesheet" href="./css/commonStyles.css"/>
-</head>src
+</head>
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -22,8 +22,6 @@
             </div>
             <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <!-- <li><a href="#">Page 1</a></li> -->
-            <!-- <li><a href="#">Page 2</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -82,9 +80,68 @@
             cardBody.append(address)
             cardBody.append(studentLink)
             card.append(cardBody)
+
+            studentLink.on("click", function() {
+                console.log(student.birthdate)
+                const queryURL = "http://localhost:8080/api/dueVaccines";
+                $.ajax({
+                    url: queryURL,
+                    method: "POST",
+                    data: {
+                        "birthday" : student.birthdate, 
+                        "studentId" : student.id
+                    }
+                }).then(function(response) {
+                    $('#vaccinationModel').modal('show');
+                    response.forEach(element=> {
+                        console.log(createCardForDueVaccine(element))
+                        $("#dueVaccinesForm").append(createCardForDueVaccine(element))
+                    })
+                });
+            })
             $("#listContainer").append(card)
+        }
+
+        function createCardForDueVaccine(vaccine) {
+            var card = $("<div>")
+            card.addClass("card")
+            // card.addClass("text-center")
+            card.addClass("bordered")
+            // card.attr("style", "width: 18rem")
+            
+            // <div class="card-body">
+            var cardBody = $("<div>")
+            cardBody.addClass("card-body")
+            
+            // <h5 class="card-title">Special title treatment</h5>
+            var cardTitle = $("<h5>")
+            cardTitle.addClass("card-title")
+            cardTitle.text(vaccine.vaccineName)
+
+            let inputFiled = $("<input id=" + vaccine.id + " type=" + "date" + " class=" + "form-control" + "/>")
+            cardBody.append(cardTitle)
+            cardBody.append(inputFiled)
+            card.append(cardBody)
+            return card
         }
 
     </script>
 </body>
+
+<div id="vaccinationModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Due Vaccines</h4>
+        </div>
+        <div class="modal-body">  
+            <form action="" method="POST" role="form">
+                <div id="dueVaccinesContainer"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </html>
