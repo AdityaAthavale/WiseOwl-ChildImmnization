@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,43 +13,57 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Local CSS -->
-    <link type="text/css" rel="stylesheet" href="./css/commonStyles.css"/>
+    <link type="text/css" rel="stylesheet" href="./css/commonStyles.css" />
 </head>
+
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-            <a class="navbar-brand" href="#">Wise Owl Pre School</a>
+                <a class="navbar-brand" href="#">Wise Owl Pre School</a>
             </div>
             <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="#">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </nav>
     <div class="container">
         <form id="searchForm" method="POST" action="api/search" class="form-inline my-2 my-lg-0">
-            <input id="searchBox"name="searchField" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button id="submitButton"class="btn btn-outline-success my-2 my-sm-0 bordered" type="button">Search</button>
+            <input id="searchBox" name="searchField" class="form-control mr-sm-2" type="search" placeholder="Search"
+                aria-label="Search">
+            <button id="submitButton" class="btn btn-outline-success my-2 my-sm-0 bordered"
+                type="button">Search</button>
         </form>
         <div id="listContainer"></div>
     </div>
     <script>
-        $("#submitButton").click(function() {
+        $("#submitButton").click(function () {
+            $("#listContainer").empty();
+
+            // if search field is empty, alert message
+            if ($.trim($('#searchBox').val()) == '') {
+                alert("Search is empty");
+                return;
+            }
+
             const queryURL = "http://localhost:8080/api/search";
             $.ajax({
                 url: queryURL,
                 method: "POST",
-                data: {"searchField" : $("#searchBox").val()}
-            }).then(function(response) {
+                data: {
+                    "searchField": $("#searchBox").val().trim()
+                }
+            }).then(function (response) {
                 console.log(response)
                 response.forEach(element => {
                     createStudentCard(element)
                 });
             });
         });
+
         function createStudentCard(student) {
             // <div class="card text-center" style="width: 18rem;">
             var card = $("<div>")
@@ -56,17 +71,18 @@
             // card.addClass("text-center")
             card.addClass("bordered")
             // card.attr("style", "width: 18rem")
-            
+
             // <div class="card-body">
             var cardBody = $("<div>")
             cardBody.addClass("card-body")
-            
+
             // <h5 class="card-title">Special title treatment</h5>
             var cardTitle = $("<h5>")
             cardTitle.addClass("card-title")
             cardTitle.text(student.firstName);
             var address = $("<p>")
-            address.text(student.addressLine1 + " " + student.addressLine2 + " " + student.addressLine3 + " " + student.city + " " + student.state);
+            address.text(student.addressLine1 + " " + student.addressLine2 + " " + student.addressLine3 + " " + student
+                .city + " " + student.state);
             //<a href="#" class="btn btn-primary">Go somewhere</a>
             var studentLink = $("<button>")
             studentLink.addClass("btn")
@@ -81,4 +97,5 @@
         }
     </script>
 </body>
+
 </html>
