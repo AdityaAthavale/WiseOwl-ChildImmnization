@@ -36,6 +36,7 @@
         <div id="listContainer"></div>
     </div>
     <script>
+        let selectedStudentId = -1;
         $("#submitButton").click(function() {
             const queryURL = "http://localhost:8080/api/search";
             $.ajax({
@@ -82,6 +83,7 @@
             card.append(cardBody)
 
             studentLink.on("click", function() {
+                selectedStudentId = student.id
                 console.log(student.birthdate)
                 const queryURL = "http://localhost:8080/api/dueVaccines";
                 $.ajax({
@@ -95,7 +97,7 @@
                     $('#vaccinationModel').modal('show');
                     response.forEach(element=> {
                         console.log(createCardForDueVaccine(element))
-                        $("#dueVaccinesForm").append(createCardForDueVaccine(element))
+                        $("#dueVaccinesContainer").append(createCardForDueVaccine(element))
                     })
                 });
             })
@@ -121,10 +123,30 @@
             let inputFiled = $("<input id=" + vaccine.id + " type=" + "date" + " class=" + "form-control" + "/>")
             cardBody.append(cardTitle)
             cardBody.append(inputFiled)
+
+            var updateButton = $("<button>")
+            updateButton.addClass("btn")
+            updateButton.addClass("btn-primary")
+            updateButton.text("Update")
+            updateButton.on("click", function() {
+                console.log(inputFiled.val)
+                // const queryURL = "http://localhost:8080/api/updateVaccination";
+                // $.ajax({
+                //     url: queryURL,
+                //     method: "POST",
+                //     data: {
+                //         "vaccinationDate" : inputFiled.val, 
+                //         "studentId" : selectedStudentId,
+                //         "vaccineId": vaccine.id
+                //     }
+                // }).then(function(response) {
+                //     console.log(response)
+                // });
+            })
+            cardBody.append(updateButton)
             card.append(cardBody)
             return card
         }
-
     </script>
 </body>
 
@@ -139,6 +161,7 @@
         <div class="modal-body">  
             <form action="" method="POST" role="form">
                 <div id="dueVaccinesContainer"></div>
+                <button id="submit-btn" name="searchfield" type="button">Submit</button>
             </form>
         </div>
     </div>
