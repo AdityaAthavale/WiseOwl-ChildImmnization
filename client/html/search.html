@@ -129,19 +129,19 @@
             updateButton.addClass("btn-primary")
             updateButton.text("Update")
             updateButton.on("click", function() {
-                console.log(inputFiled.val)
-                // const queryURL = "http://localhost:8080/api/updateVaccination";
-                // $.ajax({
-                //     url: queryURL,
-                //     method: "POST",
-                //     data: {
-                //         "vaccinationDate" : inputFiled.val, 
-                //         "studentId" : selectedStudentId,
-                //         "vaccineId": vaccine.id
-                //     }
-                // }).then(function(response) {
-                //     console.log(response)
-                // });
+                event.preventDefault();
+                const queryURL = "http://localhost:8080/api/updateVaccination";
+                $.ajax({
+                    url: queryURL,
+                    method: "POST",
+                    data: {
+                        "vaccinationDate" : inputFiled[0].value, 
+                        "studentId" : selectedStudentId,
+                        "vaccineId": vaccine.id
+                    }
+                }).then(function(response) {
+                    console.log(response)
+                });
             })
             cardBody.append(updateButton)
             card.append(cardBody)
