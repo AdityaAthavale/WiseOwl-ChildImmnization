@@ -16,11 +16,6 @@ module.exports = {
     "operatorsAliases": false
   },
   "production": {
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASS,
-    "database": "WiseOwl_ChildImmunization",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "use_env_variable": process.env.JAWSDB_URL
   }
 }
