@@ -1,23 +1,23 @@
-{
+module.exports = {
   "development": {
-    "username": "root",
-    "password": "xqjiji200",
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
     "database": "WiseOwl_ChildImmunization",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
   },
   "test": {
-    "username": "root",
-    "password": "xqjiji200",
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
     "database": "WiseOwl_ChildImmunization",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
   },
   "production": {
-    "username": "root",
-    "password": "xqjiji200",
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
     "database": "WiseOwl_ChildImmunization",
     "host": "127.0.0.1",
     "dialect": "mysql",

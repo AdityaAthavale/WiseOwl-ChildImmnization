@@ -5,7 +5,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + './../../config/config.json')[env];
+const config = require(__dirname + './../../config/config.js')[env];
 const db = {};
 
 let sequelize;
@@ -36,8 +36,18 @@ Object.keys(db).forEach(modelName => {
 //This will also mean if you delete an entry from Students table all entries for that student id in vaccinationRecords will get deleted.
 //Also record can not be added to VaccinationRecords unless there is student with that student Id present.
 //This is above what we will cover in class but required to deliver professional project.
-db.VaccinationRecords.belongsTo(db.Student, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
-db.VaccinationRecords.belongsTo(db.Vaccine, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
+db.VaccinationRecords.belongsTo(db.Student, {
+  foreignKey: {
+    allowNull: false
+  },
+  onDelete: 'CASCADE'
+})
+db.VaccinationRecords.belongsTo(db.Vaccine, {
+  foreignKey: {
+    allowNull: false
+  },
+  onDelete: 'CASCADE'
+})
 db.VaccinationRecords.sync()
 
 db.sequelize = sequelize;
