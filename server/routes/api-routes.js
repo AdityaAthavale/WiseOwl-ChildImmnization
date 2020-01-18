@@ -133,15 +133,18 @@ module.exports = function(app) {
             where: {
                 StudentId: req.body.studentId, 
             },
-            attributes: ['id']
+            attributes: ['VaccineId']
         }).then(vaccineIds => {
+            console.log("**********************")
+            console.log(vaccineIds.map(record => record.id))
+            console.log("**********************")
             db.Vaccine.findAll({
                 where: {
                     dueDaysFromBirth: {
                         [Op.lte]: differenceInDays
                     },
                     id: {
-                        [Op.notIn]: vaccineIds.map(record => record.id)
+                        [Op.notIn]: vaccineIds.map(record => record.VaccineId)
                     }
                 }
             }).then(vaccines => {
