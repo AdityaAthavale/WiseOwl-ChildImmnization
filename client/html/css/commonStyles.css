@@ -2,6 +2,10 @@
     color : black;
     border: 1px solid black;
     padding: 5px;
-    width: 18rem;
+    width: 17rem;
     margin: 10px;
+};
+
+.padding {
+    margin: 5px;
 };

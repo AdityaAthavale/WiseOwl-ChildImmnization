@@ -21,8 +21,16 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname, "./../../client/js/register.js"))
     })
 
+    app.get("/js/login.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/login.js"))
+    })
+
     app.get("/css/commonStyles.css", function(req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
+    })
+
+    app.get("/js/search.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/search.js"))
     })
 
     app.post("/api/login", function(req, res) {
