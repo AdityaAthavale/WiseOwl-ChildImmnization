@@ -8,7 +8,7 @@ $(document).ready(() => {
             method: "POST",
             data: {"searchField" : $("#searchBox").val()}
         }).then(function(response) {
-            console.log(response)
+            $("#listContainer").html('')
             response.forEach(element => {
                 createStudentCard(element)
             });
@@ -58,6 +58,11 @@ $(document).ready(() => {
                     "studentId" : student.id
                 }
             }).then(function(response) {
+                $("#dueVaccinesContainer").html('')
+                // while(child) {
+                //     child.remove()
+                //     child = $("#dueVaccinesContainer").firstElementChild
+                // }
                 $('#vaccinationModel').modal('show');
                 //Logic to get 3 cards in a row.
                 let cards = new Array();

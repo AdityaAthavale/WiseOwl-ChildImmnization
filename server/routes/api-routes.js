@@ -139,7 +139,7 @@ module.exports = function(app) {
                         [Op.lte]: differenceInDays
                     },
                     id: {
-                        [Op.notIn]: vaccineIds
+                        [Op.notIn]: vaccineIds.map(record => record.id)
                     }
                 }
             }).then(vaccines => {
