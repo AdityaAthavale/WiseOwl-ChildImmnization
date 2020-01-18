@@ -8,7 +8,9 @@ module.exports = function(app) {
     app.get("/", function (req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/index.html"));
     });
-
+    app.get("/html/typing.jpg", function (req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/typing.jpg"));
+    })
     app.get("/search", function (req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
     })
@@ -143,6 +145,7 @@ module.exports = function(app) {
                     }
                 }
             }).then(vaccines => {
+                console.log(vaccines)
                 res.send(vaccines)
             })
         })
