@@ -39,24 +39,32 @@ $(document).ready(() => {
                 console.log(data);
                 alert("Adding new student.");
             });
+            // empty each input box by replacing the value with an empty string
+            $("#firstname").val("");
+            $("#lastname").val("");
+            $("#birthdate").val("");
+            $("#addressone").val("");
+            $("#addresstwo").val("");
+            $("#addressthree").val("");
+            $("#city").val("");
+            $("#state").val("");
+            $("#pin").val("");
+            $("#fathername").val("");
+            $("#mothername").val("");
+            $("#fathercell").val("");
+            $("#mothercell").val("");
+            $("#homephone").val("");
+            $("#emailone").val("");
+            $("#emailtwo").val("");
+            window.location.replace("http://localhost:8080/search");
+    });
 
-        // empty each input box by replacing the value with an empty string
-        $("#firstname").val("");
-        $("#lastname").val("");
-        $("#birthdate").val("");
-        $("#addressone").val("");
-        $("#addresstwo").val("");
-        $("#addressthree").val("");
-        $("#city").val("");
-        $("#state").val("");
-        $("#pin").val("");
-        $("#fathername").val("");
-        $("#mothername").val("");
-        $("#fathercell").val("");
-        $("#mothercell").val("");
-        $("#homephone").val("");
-        $("#emailone").val("");
-        $("#emailtwo").val("");
+    $("#closeButton").click(function () {
+        window.location.replace("http://localhost:8080/search");
+    });
+
+    $("#closeButton1").click(function () {
+        window.location.replace("http://localhost:8080/search");
     });
 
 });
