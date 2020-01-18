@@ -5,16 +5,34 @@ const Op = db.Sequelize.Op;
 module.exports = function(app) {
 
     //This will open index.html
-    app.get("/", function(req, res) {
+    app.get("/", function (req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/index.html"));
     });
-
-    app.get("/search", function(req, res) {
+    app.get("/html/typing.jpg", function (req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/typing.jpg"));
+    })
+    app.get("/search", function (req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/search.html"));
+    })
+
+    app.get("/register", function (req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/html/register.html"));
+    })
+
+    app.get("/js/register.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/register.js"))
+    })
+
+    app.get("/js/login.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/login.js"))
     })
 
     app.get("/css/commonStyles.css", function(req, res) {
         res.sendFile(path.join(__dirname, "./../../client/html/css/commonStyles.css"))
+    })
+
+    app.get("/js/search.js", function(req, res) {
+        res.sendFile(path.join(__dirname, "./../../client/js/search.js"))
     })
 
     app.post("/api/login", function(req, res) {
@@ -50,8 +68,19 @@ module.exports = function(app) {
         })
     })
 
+    app.post("/api/updateVaccination", function(req, res) {
+        console.log("Adding vaccination record")
+        console.log(req.body.vaccinationDate)
+        db.VaccinationRecords.create({
+            vaccinationDate: req.body.vaccinationDate,
+            StudentId: req.body.studentId,
+            VaccineId: req.body.vaccineId
+        }).then(record => {
+            res.send(record)
+        })
+    })
+
     app.post("/api/search", function(req, res) {
-        console.log(req)
         db.Student.findAll({
             where: {
                 //We will search for student Id or student name.
@@ -81,42 +110,51 @@ module.exports = function(app) {
             email1: req.body.email1,
             email2: req.body.email2,
             birthdate: req.body.birthdate,
-            enrollmentdate: req.body.enrollmentdate
+            enrollmentdate: req.body.enrollmentdate || new Date()
         }).then(newStudent => {
             res.send(newStudent)
         })
     })
+
+    app.post("api/getVaccinationRecords", function(req, res) {
+
+    });
 
     app.post("/api/dueVaccines", function(req, res) {
         //Step 1: Calculate students age in Days
         //Post parameters: Get birthdate and student id from server.
         let bDate = new Date(req.body.birthday)
         let today = new Date()
-        let timeDifference = Math.abs(today.getTime() - bDate.getTime());
+        let timeDifference = today.getTime() - bDate.getTime();
         let differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
+        
         db.VaccinationRecords.findAll( {
             where: {
                 StudentId: req.body.studentId, 
             },
-            attributes: ['id']
+            attributes: ['VaccineId']
         }).then(vaccineIds => {
+            console.log("**********************")
+            console.log(vaccineIds.map(record => record.id))
+            console.log("**********************")
             db.Vaccine.findAll({
                 where: {
                     dueDaysFromBirth: {
                         [Op.lte]: differenceInDays
                     },
                     id: {
-                        [Op.notIn]: vaccineIds
+                        [Op.notIn]: vaccineIds.map(record => record.VaccineId)
                     }
                 }
             }).then(vaccines => {
+                console.log(vaccines)
                 res.send(vaccines)
             })
         })
     })
 
-    app.post("/api/addTeacher", function(req, res) {
+    app.post("/api/addTeacher", function (req, res) {
         db.Teacher.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -127,7 +165,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post("/api/addVaccine", function(req, res) {
+    app.post("/api/addVaccine", function (req, res) {
         db.Vaccine.create({
             vaccineName: req.body.vaccineName,
             dueDaysFromBirth: req.body.dueDaysFromBirth,
